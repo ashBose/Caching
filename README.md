@@ -1,6 +1,6 @@
 Caching
 
-Caching solution comparison using Couchbase, MySQL, Java
+TINYURL Caching solution comparison using Couchbase, MySQL, Java
 
 #How to run mvn clean compile exec:java -Dexec.mainClass="main.java.com.tinyurl.tinyurlservice"
 
