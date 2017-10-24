@@ -1,4 +1,4 @@
-package main.java.com.tinyurl;
+package com.tinyurl;
 
 
 import java.io.IOException;
@@ -8,11 +8,10 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public class httpserver {
     private static int port = 8080;
     private HttpServer server;
     private static database db = null;
+    static Logger logger = tinyLogger.getInstance().getLogger();
 
     public httpserver(int port ) throws Exception {
         this.port = port;
@@ -61,7 +61,6 @@ public class httpserver {
 
     public static class RootHandler implements HttpHandler {
 
-        @Override
         public void handle(HttpExchange he) throws IOException {
             String response = "<h1>Server start success if you see this message</h1>" + "<h1>Port: " + httpserver.port + "</h1>";
             he.sendResponseHeaders(200, response.length());
@@ -73,7 +72,6 @@ public class httpserver {
 
     public static class urlGetHandler implements HttpHandler {
 
-        @Override
         public void handle(HttpExchange he) throws IOException {
             // parse request
             String shorturl = httpserver.getUrlBody(he);
@@ -96,9 +94,8 @@ public class httpserver {
 
     public static class urlPostHandler implements HttpHandler {
 
-        @Override
         public void handle(HttpExchange he) throws IOException {
-            System.out.println("Served by /echoPost handler...");
+            logger.info("Served by /echoPost handler...");
             // parse request
             String url = httpserver.getUrlBody(he);
             database db = httpserver.getDB();
@@ -109,8 +106,6 @@ public class httpserver {
                 shorturl = tinyurl.encode(id);
                 db.setter(String.valueOf(id), url, shorturl);
             }
-            // send response
-
             String response = "new_url:http://shortme/" + shorturl;
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();

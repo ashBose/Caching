@@ -1,11 +1,10 @@
-package main.java.com.tinyurl;
+package com.tinyurl;
 
 public interface database {
-
-    public void connect(String user, String pass);
-    public void  setter(String key, String value, String value1);
-    public String getter(String key, String whichurl);
-    public void disconnect();
+    void connect(String user, String pass);
+    void  setter(String key, String value, String value1);
+    String getter(String key, String whichurl);
+    void disconnect();
 }
 
 

@@ -1,4 +1,4 @@
-package main.java.com.tinyurl;
+package com.tinyurl;
 
 public class tinyurl {
 
